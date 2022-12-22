@@ -100,4 +100,12 @@ return function(use)
       })
     end
   })
+  use({
+    'akinsho/bufferline.nvim',
+    tag = "v3.*",
+    requires = 'nvim-tree/nvim-web-devicons',
+    config = function ()
+      require("bufferline").setup({})
+    end
+  })
 end

@@ -65,3 +65,7 @@ vim.keymap.set('n', '<leader>dc', continue, { desc = '[D]ebug Start/[C]ontinue'}
 vim.keymap.set('n', '<leader>dt', require('dap').toggle_breakpoint, { desc = '[D]ebug [T]oggle breakpoint'})
 vim.keymap.set('n', '<leader>di', require('dap').step_into, { desc = '[D]ebug Step [I]nto'})
 vim.keymap.set('n', '<leader>do', require('dap').step_over, { desc = '[D]ebug Steo [O]ver'})
+
+vim.keymap.set('n', '<leader>bs', require('bufferline').pick_buffer, {desc = '[B]uffer [P]ick'})
+  -- lua require("neotest").run.run({vim.fn.expand("%"), strategy = "dap"})
+
