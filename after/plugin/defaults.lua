@@ -20,6 +20,8 @@ vim.cmd [[ colorscheme gruvbox ]]
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 
 -- nvim-tree
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
