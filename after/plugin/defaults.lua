@@ -45,6 +45,24 @@ require('lualine').setup({
 
 local dapui =require('dapui')
 local dap = require('dap')
+
+dap.adapters.coreclr={
+  type = 'executable',
+  command = '/home/florin/.local/share/nvim/mason/packages/netcoredbg/netcoredbg',
+  args = {'--interpreter=vscode'}
+}
+
+dap.configurations.cs = {
+  {
+    type = "coreclr",
+    name = "launch - netcoredbg",
+    request = "launch",
+    program = function()
+        return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+    end,
+  },
+}
+
 dap.listeners.after.event_initialized["dapui_config"] = function ()
 	dapui.open()
 end
@@ -58,7 +76,7 @@ end
 -- require("dap.ext.vscode").load_launchjs()
 local continue = function()
   if vim.fn.filereadable('.vscode/launch.json') then
-    require('dap.ext.vscode').load_launchjs(nil, {})
+    require('dap.ext.vscode').load_launchjs()
   end
   require('dap').continue()
 end
