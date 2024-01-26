@@ -30,29 +30,67 @@ return {
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
-      automatic_setup = true,
+      automatic_installation = false,
 
       -- You'll need to check that you have the required things installed
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
+        'delve', 'coreclr'
       },
+      handlers = {},
     }
 
+    require('dap').set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
     -- You can provide additional configuration to the handlers,
     -- see mason-nvim-dap README for more information
-    require('mason-nvim-dap').setup_handlers()
+    -- require('mason-nvim-dap').setup_handlers()
+
+    -- require("dap.ext.vscode").load_launchjs()
+    local continue = function()
+      if vim.fn.filereadable('.vscode/launch.json') then
+        print("found launch.json")
+        require('dap.ext.vscode').load_launchjs(nil)
+      end
+      print("continue")
+      require('dap').continue()
+    end
+
+
+
+    dap.adapters.coreclr = {
+      type = 'executable',
+      command = vim.fn.stdpath("data") .. '/mason/packages/netcoredbg/netcoredbg',
+      args = { '--interpreter=vscode' }
+    }
+
+    -- dap.configurations.cs = {
+    --   {
+    --     type = "coreclr",
+    --     name = "launch - netcoredbg",
+    --     request = "launch",
+    --     program = function()
+    --       return vim.fn.input('Path to dll:', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+    --     end,
+    --   },
+    -- }
+
+    -- vim.keymap.set('n', '<leader>dm', require('dap-python').test_method, { desc = '[D]ebug [M]ethod'})
+    -- vim.keymap.set('n', '<leader>dc', require('dap').continue, { desc = '[D]ebug Start/[C]ontinue' })
+    vim.keymap.set('n', '<leader>dc', continue, { desc = '[D]ebug Start/[C]ontinue' })
+    vim.keymap.set('n', '<leader>dt', require('dap').toggle_breakpoint, { desc = '[D]ebug [T]oggle breakpoint' })
+    vim.keymap.set('n', '<leader>di', require('dap').step_into, { desc = '[D]ebug Step [I]nto' })
+    vim.keymap.set('n', '<leader>do', require('dap').step_over, { desc = '[D]ebug Steo [O]ver' })
 
     -- Basic debugging keymaps, feel free to change to your liking!
-    vim.keymap.set('n', '<F5>', dap.continue)
-    vim.keymap.set('n', '<F1>', dap.step_into)
-    vim.keymap.set('n', '<F2>', dap.step_over)
-    vim.keymap.set('n', '<F3>', dap.step_out)
-    vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
-    vim.keymap.set('n', '<leader>B', function()
-      dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-    end)
+    -- vim.keymap.set('n', '<F5>', dap.continue)
+    -- vim.keymap.set('n', '<F1>', dap.step_into)
+    -- vim.keymap.set('n', '<F2>', dap.step_over)
+    -- vim.keymap.set('n', '<F3>', dap.step_out)
+    -- vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
+    -- vim.keymap.set('n', '<leader>B', function()
+    --   dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+    -- end)
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
