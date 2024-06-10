@@ -102,15 +102,15 @@ return {
   -- })
   ({
     'akinsho/bufferline.nvim',
-    tag = "v3.5.0",
+    tag = "v4.6.1",
     requires = 'nvim-tree/nvim-web-devicons',
-    config = function ()
-      require("bufferline").setup({})
+    config = function()
+      require("bufferline").setup()
     end
   }),
   ({
     'akinsho/toggleterm.nvim',
-    config = function ()
+    config = function()
       require("toggleterm").setup({
         size = 20,
         open_mapping = [[<c-\>]],

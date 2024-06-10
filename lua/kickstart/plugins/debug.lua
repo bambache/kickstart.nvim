@@ -5,6 +5,13 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
+-- return {
+--    "rcarriga/nvim-dap-ui",
+--   dependencies = {
+--     "mfussenegger/nvim-dap",
+--     "nvim-neotest/nvim-nio",
+--   }
+-- },
 
 return {
   -- NOTE: Yes, you can install new plugins here!
@@ -12,6 +19,7 @@ return {
 
   -- NOTE: And you can specify dependencies as well
   dependencies = {
+    "nvim-neotest/nvim-nio",
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
 
@@ -46,11 +54,11 @@ return {
     -- see mason-nvim-dap README for more information
     -- require('mason-nvim-dap').setup_handlers()
 
-    -- require("dap.ext.vscode").load_launchjs()
+    -- require("dap.ext.vscode").json_decode = require 'json5'.parse
     local continue = function()
       if vim.fn.filereadable('.vscode/launch.json') then
         print("found launch.json")
-        require('dap.ext.vscode').load_launchjs(nil)
+        require('dap.ext.vscode').load_launchjs(nil, { coreclr = { 'cs' } })
       end
       print("continue")
       require('dap').continue()
