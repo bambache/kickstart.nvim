@@ -27,6 +27,8 @@ return {
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
 
+    "ldelossa/nvim-dap-projects",
+
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
   },
@@ -44,16 +46,17 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve', 'coreclr'
+        'delve', 'coreclr', 'codelldb'
       },
       handlers = {},
     }
+
+    require("nvim-dap-projects").search_project_config()
 
     require('dap').set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
     -- You can provide additional configuration to the handlers,
     -- see mason-nvim-dap README for more information
     -- require('mason-nvim-dap').setup_handlers()
-
     -- require("dap.ext.vscode").json_decode = require 'json5'.parse
     local continue = function()
       if vim.fn.filereadable('.vscode/launch.json') then
