@@ -5,6 +5,9 @@ vim.opt.autowrite = true
 vim.opt.cursorline = true
 vim.opt.autoread = true
 
+vim.opt.listchars = 'space:·,tab:->'
+vim.opt.list = true
+vim.keymap.set('n', '<leader>si', ':set list!<CR>')
 -- use spaces for tabs and more
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -25,7 +28,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- vim.g.loaded_netrw = 1
 -- vim.g.loaded_netrwPlugin = 1
 
-vim.keymap.set('n', '<c-n>', ':Neotree<CR>')
+vim.keymap.set('n', '<c-n>', ':Neotree toggle<CR>')
 
 -- lualine options
 require('lualine').setup({
