@@ -17,7 +17,7 @@ vim.opt.relativenumber = true
 
 -- gruvbox
 vim.o.termguicolors = true
-vim.cmd [[ colorscheme gruvbox ]]
+vim.cmd [[ colorscheme catppuccin-mocha ]]
 
 -- custom search resume
 vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
