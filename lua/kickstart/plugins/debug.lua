@@ -51,7 +51,8 @@ return {
       handlers = {},
     }
 
-    require("nvim-dap-projects").search_project_config()
+    require("easy-dotnet.netcoredbg").register_dap_variables_viewer()
+    -- require("nvim-dap-projects").search_project_config()
 
     require('dap').set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
     -- You can provide additional configuration to the handlers,
@@ -59,10 +60,10 @@ return {
     -- require('mason-nvim-dap').setup_handlers()
     -- require("dap.ext.vscode").json_decode = require 'json5'.parse
     local continue = function()
-      if vim.fn.filereadable('.vscode/launch.json') then
-        print("found launch.json")
-        require('dap.ext.vscode').load_launchjs(nil, { coreclr = { 'cs' } })
-      end
+      -- if vim.fn.filereadable('.vscode/launch.json') then
+      --   print("found launch.json")
+      --   require('dap.ext.vscode').load_launchjs(nil, { coreclr = { 'cs' } })
+      -- end
       print("continue")
       require('dap').continue()
     end
@@ -88,10 +89,10 @@ return {
 
     -- vim.keymap.set('n', '<leader>dm', require('dap-python').test_method, { desc = '[D]ebug [M]ethod'})
     -- vim.keymap.set('n', '<leader>dc', require('dap').continue, { desc = '[D]ebug Start/[C]ontinue' })
-    vim.keymap.set('n', '<leader>dc', continue, { desc = '[D]ebug Start/[C]ontinue' })
-    vim.keymap.set('n', '<leader>dt', require('dap').toggle_breakpoint, { desc = '[D]ebug [T]oggle breakpoint' })
-    vim.keymap.set('n', '<leader>di', require('dap').step_into, { desc = '[D]ebug Step [I]nto' })
-    vim.keymap.set('n', '<leader>do', require('dap').step_over, { desc = '[D]ebug Steo [O]ver' })
+    vim.keymap.set('n', '<F5>', continue, { desc = '[D]ebug Start/[C]ontinue' })
+    vim.keymap.set('n', '<F9>', require('dap').toggle_breakpoint, { desc = '[D]ebug [T]oggle breakpoint' })
+    vim.keymap.set('n', '<F11>', require('dap').step_into, { desc = '[D]ebug Step [I]nto' })
+    vim.keymap.set('n', '<F10>', require('dap').step_over, { desc = '[D]ebug Steo [O]ver' })
 
     -- Basic debugging keymaps, feel free to change to your liking!
     -- vim.keymap.set('n', '<F5>', dap.continue)

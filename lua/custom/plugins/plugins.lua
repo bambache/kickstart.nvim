@@ -136,16 +136,28 @@ return {
     end
   }),
   ({
-    "dustinblackman/oatmeal.nvim",
-    cmd = { "Oatmeal" },
-    keys = {
-      { "<leader>om", mode = "n", desc = "Start Oatmeal session" },
-    },
-    opts = {
-      backend = "ollama",
-      model = "codellama:latest",
-    },
+    "GustavEikaas/easy-dotnet.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", 'nvim-telescope/telescope.nvim', },
+    config = function()
+      local dotnet = require "easy-dotnet"
+      dotnet.setup{
+        debugger = {
+          bin_path = vim.fn.stdpath("data") .. '/mason/packages/netcoredbg/netcoredbg'
+        }
+      }
+    end
   }),
+  -- ({
+  --   "dustinblackman/oatmeal.nvim",
+  --   cmd = { "Oatmeal" },
+  --   keys = {
+  --     { "<leader>om", mode = "n", desc = "Start Oatmeal session" },
+  --   },
+  --   opts = {
+  --     backend = "ollama",
+  --     model = "codellama:latest",
+  --   },
+  -- }),
   ({
     "yetone/avante.nvim",
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
