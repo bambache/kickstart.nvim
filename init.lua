@@ -120,13 +120,13 @@ require('lazy').setup({
     },
   },
 
-  { -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
-  },
-  'olimorris/onedarkpro.nvim',
-  'scottmckendry/cyberdream.nvim',
-  'rebelot/kanagawa.nvim',
+  -- { -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  -- },
+  -- 'olimorris/onedarkpro.nvim',
+  -- 'scottmckendry/cyberdream.nvim',
+  -- 'rebelot/kanagawa.nvim',
   {
     "catppuccin/nvim",
     name = "catppuccin",
