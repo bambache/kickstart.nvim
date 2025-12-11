@@ -5,12 +5,20 @@
 -- Primarily focused on configuring the debugger for Go, but can
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
+-- return {
+--    "rcarriga/nvim-dap-ui",
+--   dependencies = {
+--     "mfussenegger/nvim-dap",
+--     "nvim-neotest/nvim-nio",
+--   }
+-- },
 
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
   -- NOTE: And you can specify dependencies as well
   dependencies = {
+    "nvim-neotest/nvim-nio",
     -- Creates a beautiful debugger UI
     'rcarriga/nvim-dap-ui',
 
@@ -20,6 +28,8 @@ return {
     -- Installs the debug adapters for you
     'mason-org/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
+
+    "ldelossa/nvim-dap-projects",
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
@@ -80,9 +90,63 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
+        'delve', 'coreclr', 'codelldb'
       },
+      handlers = {},
     }
+
+    require("easy-dotnet.netcoredbg").register_dap_variables_viewer()
+    -- require("nvim-dap-projects").search_project_config()
+
+    require('dap').set_log_level('INFO') -- Helps when configuring DAP, see logs with :DapShowLog
+    -- You can provide additional configuration to the handlers,
+    -- see mason-nvim-dap README for more information
+    -- require('mason-nvim-dap').setup_handlers()
+    -- require("dap.ext.vscode").json_decode = require 'json5'.parse
+    local continue = function()
+      -- if vim.fn.filereadable('.vscode/launch.json') then
+      --   print("found launch.json")
+      --   require('dap.ext.vscode').load_launchjs(nil, { coreclr = { 'cs' } })
+      -- end
+      print("continue")
+      require('dap').continue()
+    end
+
+
+
+    dap.adapters.coreclr = {
+      type = 'executable',
+      command = vim.fn.stdpath("data") .. '/mason/packages/netcoredbg/netcoredbg',
+      args = { '--interpreter=vscode' }
+    }
+
+    -- dap.configurations.cs = {
+    --   {
+    --     type = "coreclr",
+    --     name = "launch - netcoredbg",
+    --     request = "launch",
+    --     program = function()
+    --       return vim.fn.input('Path to dll:', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+    --     end,
+    --   },
+    -- }
+
+    -- vim.keymap.set('n', '<leader>dm', require('dap-python').test_method, { desc = '[D]ebug [M]ethod'})
+    -- vim.keymap.set('n', '<leader>dc', require('dap').continue, { desc = '[D]ebug Start/[C]ontinue' })
+    vim.keymap.set('n', '<F5>', continue, { desc = '[D]ebug Start/[C]ontinue' })
+    vim.keymap.set('n', '<F9>', require('dap').toggle_breakpoint, { desc = '[D]ebug [T]oggle breakpoint' })
+    vim.keymap.set('n', '<F11>', require('dap').step_into, { desc = '[D]ebug Step [I]nto' })
+    vim.keymap.set('n', '<F10>', require('dap').step_over, { desc = '[D]ebug Steo [O]ver' })
+
+    -- Basic debugging keymaps, feel free to change to your liking!
+    -- vim.keymap.set('n', '<F5>', dap.continue)
+    -- vim.keymap.set('n', '<F1>', dap.step_into)
+    -- vim.keymap.set('n', '<F2>', dap.step_over)
+    -- vim.keymap.set('n', '<F3>', dap.step_out)
+    -- vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint)
+    -- vim.keymap.set('n', '<leader>B', function()
+    --   dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
+    -- end)
 
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
