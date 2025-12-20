@@ -769,7 +769,12 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
+        providers = {
+          -- defaults to `{ 'buffer' }`
+          lsp = { fallbacks = {} },
+          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+        },
       },
 
       snippets = { preset = 'luasnip' },
