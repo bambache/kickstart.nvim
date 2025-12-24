@@ -769,11 +769,29 @@ require('lazy').setup({
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer' },
+        default = { 'lsp', 'buffer', 'path', 'snippets', 'lazydev' },
         providers = {
           -- defaults to `{ 'buffer' }`
           lsp = { fallbacks = {} },
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          buffer = {
+            -- Enable for all filetypes
+            enabled = true,
+            -- Increase score for buffer completions
+            -- score_offset = 50,
+            -- Include more words from buffer
+            -- max_items = 50,
+            -- opts = {
+            -- get all buffers, even ones like neo-tree
+            -- get_bufnrs = vim.api.nvim_list_bufs,
+            -- or (recommended) filter to only "normal" buffers
+            -- get_bufnrs = function()
+            --   return vim.tbl_filter(function(bufnr)
+            --     return vim.bo[bufnr].buftype == ''
+            --   end, vim.api.nvim_list_bufs())
+            -- end,
+            -- },
+          },
         },
       },
 
@@ -791,6 +809,7 @@ require('lazy').setup({
       -- Shows a signature help window while you type arguments for a function
       signature = { enabled = true },
     },
+    opts_extend = { 'sources.default' },
   },
 
   { -- You can easily change to a different colorscheme.
